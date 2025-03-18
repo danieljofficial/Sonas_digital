@@ -14,12 +14,12 @@ export class RefreshJwtGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
-    if (!token) {
-      throw new UnauthorizedException({
-        message: 'Login to proceed',
-        statusCode: 401,
-      });
-    }
+    // if (!token) {
+    //   throw new UnauthorizedException({
+    //     message: 'Login to proceed',
+    //     statusCode: 401,
+    //   });
+    // }
 
     try {
       const payload = await this.jwtService.verifyAsync(token, {

@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { LoginUserDto } from './dto/login-user-dto';
 import { UsersService } from 'src/users/users.service';
 import { compare } from 'bcrypt';
@@ -23,7 +27,7 @@ export class AuthService {
       user,
       backendTokens: {
         accessToken: await this.jwtService.signAsync(payload, {
-          expiresIn: '120s',
+          expiresIn: '3d',
           secret: process.env.JWT_SECRET,
         }),
         refreshToken: await this.jwtService.signAsync(payload, {
@@ -42,6 +46,13 @@ export class AuthService {
       return result;
     }
 
+    if (!user) {
+      throw new NotFoundException({
+        message: 'Email not found, please signup first.',
+        statusCode: 404,
+      });
+    }
+
     throw new UnauthorizedException({
       message: 'Incorrect password',
       statusCode: 401,
@@ -56,7 +67,7 @@ export class AuthService {
 
     return {
       accessToken: await this.jwtService.signAsync(payload, {
-        expiresIn: '120s',
+        expiresIn: '3d',
         secret: process.env.JWT_SECRET,
       }),
       refreshToken: await this.jwtService.signAsync(payload, {
