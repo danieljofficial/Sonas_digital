@@ -1,5 +1,5 @@
-import QuickActions from "@/components/cards/QuickActions";
-import { actionStore } from "@/localStore/db";
+// import QuickActions from "@/components/cards/QuickActions";
+// import { actionStore } from "@/localStore/db";
 import React from "react";
 
 function Dashboard() {
@@ -15,7 +15,7 @@ function Dashboard() {
           <img src="/mobileHoodie.png" alt="" />
         </div>
 
-        <div>
+        {/* <div>
           <p>Quick actions</p>
           {actionStore.map((action) => {
             return (
@@ -26,7 +26,7 @@ function Dashboard() {
               />
             );
           })}
-        </div>
+        </div> */}
       </div>
     </div>
   );
