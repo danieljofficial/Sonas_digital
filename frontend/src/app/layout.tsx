@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Nunito_Sans, Inter_Tight, Inter, Manrope } from "@next/font/google";
-import {} from "next";
+// import { Nunito_Sans, Inter_Tight, Inter, Manrope } from "@next/font/google";
+import { Poppins, Nunito_Sans, Inter } from "next/font/google";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",

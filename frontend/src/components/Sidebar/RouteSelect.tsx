@@ -55,7 +55,7 @@ export const Route = ({
   return (
     <Link
       href={href}
-      className={`flex text-md font-normal items-center justify-start gap-4 w-full rounded-lg py-3 px-2 transition-[box-shadow,_background-color,_color] 
+      className={`flex text-md font-normal items-center justify-start gap-4 w-full rounded-lg p-2 transition-[box-shadow,_background-color,_color] 
       ${
         selected
           ? "bg-[#d6d9db] text-pri font-normal shadow"
