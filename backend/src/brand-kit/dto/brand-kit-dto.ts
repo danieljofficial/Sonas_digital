@@ -9,9 +9,9 @@ export class BrandKitDto {
 
   @IsArray()
   @IsString({ each: true })
-  Colours: string[];
+  colours: string[];
 
   @IsArray()
   @IsString({ each: true })
-  Fonts: string[];
+  fonts: string[];
 }
