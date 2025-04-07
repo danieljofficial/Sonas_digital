@@ -24,7 +24,7 @@ const BrandKit = () => {
   return (
     <>
       {/* <div className="overflow-auto p-4 sm:p-6 lg:p-8 border border-black"> */}
-      <div className="bg-white rounded-lg shadow-sm p-3">
+      <div className="bg-white rounded-lg shadow-md p-3 max-md:mt-4">
         <Header />
 
         {/* Upload brand logo section */}

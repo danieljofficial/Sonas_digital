@@ -65,10 +65,10 @@ export const ProductPage = () => {
     <>
       <div
         style={{ fontFamily: "var(--font-inter)" }}
-        className="overflow-auto bg-[#FFFFFF] rounded-lg pb-4 shadow border border-red-500"
+        className="overflow-auto bg-[#FFFFFF] rounded-lg pb-4 shadow-md mt-4"
       >
         <div className="p-3 max-w-7xl mx-auto">
-          <h1 className="text-3xl font-semibold mb-6">Product</h1>
+          <h1 className="text-3xl font-semibold mb-6 ml-8 md:ml-0">Product</h1>
 
           <div className="flex flex-col md:flex-row justify-between mb-6 gap-2  items-center">
             <div className="relative w-full md:w-80 text-gray-800">
