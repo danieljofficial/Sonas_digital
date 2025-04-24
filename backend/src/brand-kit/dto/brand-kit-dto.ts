@@ -2,7 +2,10 @@ import { IsArray, IsString } from 'class-validator';
 
 export class BrandKitDto {
   @IsString()
-  userId: string;
+  name: string;
+
+  // @IsString()
+  // userId: string;
 
   @IsString()
   logoUrl: string;

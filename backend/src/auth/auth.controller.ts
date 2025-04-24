@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { LoginUserDto } from './dto/login-user-dto';
 import { AuthService } from './auth.service';
 import { RefreshJwtGuard } from './guards/refresh.guard';
+import { JwtGuard } from './guards/jwt.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -25,5 +26,11 @@ export class AuthController {
   @Post('refresh')
   async refreshToken(@Request() req) {
     return await this.authService.refreshToken(req.user);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('profile')
+  async getProfile(@Request() req) {
+    return req.user;
   }
 }

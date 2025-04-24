@@ -35,7 +35,7 @@ const Card = ({
   price: number;
 }) => {
   return (
-    <div className="col-span-3 flex flex-col gap-2">
+    <div className="col-span-12 sm:col-span-6 lg:col-span-3 flex flex-col gap-2">
       <div className="bg-[#F0F1F8] rounded-xl p-2">
         <div className="float-right rounded-full bg-[#FFFFFF] p-2">
           <LuShoppingBag />

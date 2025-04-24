@@ -10,6 +10,7 @@ import { BrandKitController } from './brand-kit/brand-kit.controller';
 import { CloudinaryConfig } from 'src/cloudinary/cloudinary.config';
 import { BrandKitModule } from './brand-kit/brand-kit.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     AuthModule,
     BrandKitModule,
     CloudinaryModule,
+    ProductsModule,
   ],
   controllers: [AppController, BrandKitController],
   providers: [AppService, BrandKitService],

@@ -7,6 +7,7 @@ import { LoginUserDto } from './dto/login-user-dto';
 import { UsersService } from 'src/users/users.service';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { AuthUser } from 'src/decorators/user.decorator';
 
 @Injectable()
 export class AuthService {
@@ -17,9 +18,10 @@ export class AuthService {
 
   async login(loginUserDto: LoginUserDto) {
     const user = await this.validateUser(loginUserDto);
-    const payload = {
+    const payload: AuthUser = {
       email: user.email,
       sub: {
+        userId: user.id,
         name: user.name,
       },
     };

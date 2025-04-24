@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 // import { Nunito_Sans, Inter_Tight, Inter, Manrope } from "@next/font/google";
 import { Poppins, Nunito_Sans, Inter } from "next/font/google";
+import QueryProvider from "@/components/QueryProvider";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -48,7 +49,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${nunitosans.variable} antialiased text-stone-950 bg-stone-100`}
       >
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

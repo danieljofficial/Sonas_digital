@@ -11,48 +11,159 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  // directUrl         = env("DIRECT_URL")
+  // directUrl         = env("DIRECT_URL")      
 }
 
-model Users {
-  id          String   @id        @default(uuid())
-  name        String   
-  companyName  String
-  email       String   @unique
+model User {
+  id          String     @id @default(uuid())
+  email       String     @unique
   password    String
+  name        String
+  companyName String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  projects    Project[]
+  cart        Cart?      @relation(fields: [cartId], references: [id])
+  cartId      String?    @unique
   brandKits   BrandKit[]
+  orders      Order[]
+}
+
+model Product {
+  id           String          @id @default(uuid())
+  name         String
+  description  String
+  price        Float
+  baseImageUrl String?
+  imagePublicId String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  customizable Boolean         @default(true)
+  options      ProductOption[]
+  cartItems    CartItem[]
+  orderItems   OrderItem[]
+
+  Project Project[]
+}
+
+model ProductOption {
+  id           String     @id @default(uuid())
+  productId    String
+  product      Product    @relation(fields: [productId], references: [id])
+  optiontType  OptionType
+  name         String
+  values       Json
+  defaultValue String?
+  required     Boolean    @default(true)
+}
+
+enum OptionType {
+  COLOR
+  FONT
+  SIZE
+  MATERIAL
+  POSITION
 }
 
 model BrandKit {
-  id        String @id @default(uuid())
+  id        String    @id @default(uuid())
+  user      User      @relation(fields: [userId], references: [id])
   userId    String
-  logoUrl   String
+  name      String
+  logoUrl   String?
   colours   String[]
   fonts     String[]
-  createdAt DateTime @default(now())
+  isDefault Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  projects  Project[]
 
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // @@unique([userId, name])
+  // @@index([userId])
 }
 
-// model Roles {
-//   id  Int   @id
-// }
+model Project {
+  id            String      @id @default(uuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  productId     String
+  product       Product     @relation(fields: [productId], references: [id])
+  brandKitId    String?
+  brandkit      BrandKit?   @relation(fields: [brandKitId], references: [id])
+  name          String
+  previewImage  String?
+  customization Json
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+}
 
-// model Orders {
-//   id  Int   @id
-// }
+model Cart {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  // user          User       @relation(fields: [userId], references: [id])
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  User      User[]
+}
 
-// model Assets {
-//   id  Int   @id
-// }
+model CartItem {
+  id              String   @id @default(uuid())
+  cartId          String
+  cart            Cart     @relation(fields: [cartId], references: [id])
+  projectId       String
+  project         Project  @relation(fields: [projectId], references: [id])
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id])
+  quantity        Int      @default(1)
+  priceAtAddition Float // Snapshot of price when added to cart
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
 
-// model DesignHistory {
-//   id  Int   @id
-// }
+model Order {
+  id              String        @id @default(uuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+  totalAmount     Float
+  status          OrderStatus   @default(PENDING)
+  shippingAddress Json? // Structured address data
+  billingAddress  Json?
+  paymentMethod   String?
+  paymentStatus   PaymentStatus @default(UNPAID)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
 
-// model Payments {
-//   id  Int   @id
-// }
+model OrderItem {
+  id            String   @id @default(uuid())
+  orderId       String
+  order         Order    @relation(fields: [orderId], references: [id])
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id])
+  productId     String
+  product       Product  @relation(fields: [productId], references: [id])
+  quantity      Int
+  unitPrice     Float
+  customization Json // Final customization snapshot
+  createdAt     DateTime @default(now())
+}
 
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
 
-
+enum PaymentStatus {
+  UNPAID
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}

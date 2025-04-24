@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { IconType } from "react-icons";
 import {
@@ -15,52 +17,96 @@ import {
 } from "react-icons/lu";
 
 export const RouteSelect = () => {
+  const pathname = usePathname();
+  const routes = [
+    {
+      Icon: LuPlus,
+      title: "Custom order",
+      href: "/custom",
+    },
+    {
+      Icon: LuHouse,
+      title: "Home",
+      href: "/home",
+    },
+    {
+      Icon: LuPencilRuler,
+      title: "Brand kit",
+      href: "/brand-kit",
+    },
+    {
+      Icon: LuShirt,
+      title: "Product",
+      href: "/products",
+    },
+    {
+      Icon: LuPackage,
+      title: "Orders",
+      href: "/orders",
+    },
+    {
+      Icon: LuShoppingCart,
+      title: "Cart",
+      href: "/cart",
+    },
+    {
+      Icon: LuFolders,
+      title: "Saved Projects",
+      href: "/saved-projects",
+    },
+    {
+      Icon: LuBell,
+      title: "Notifications",
+      href: "/notifications",
+    },
+    {
+      Icon: LuSettings,
+      title: "Settings",
+      href: "/settings",
+    },
+    {
+      Icon: LuLogOut,
+      title: "Logout",
+      href: "/logout",
+    },
+  ];
   return (
     <div className="space-y-1 text-sec ">
-      <Route selected={true} Icon={LuPlus} title={"Custom order"} href={""} />
-      <Route selected={false} Icon={LuHouse} title={"Home"} href={""} />
-      <Route
-        selected={false}
-        Icon={LuPencilRuler}
-        title={"Brand Kit"}
-        href={""}
-      />
-      <Route selected={false} Icon={LuShirt} title={"Product"} href={""} />
-      <Route selected={false} Icon={LuPackage} title={"Orders"} href={""} />
-      <Route selected={false} Icon={LuShoppingCart} title={"Cart"} href={""} />
-      <Route
-        selected={false}
-        Icon={LuFolders}
-        title={"Saved Projects"}
-        href={""}
-      />
-      <Route selected={false} Icon={LuBell} title={"Notifications"} href={""} />
-      <Route selected={false} Icon={LuSettings} title={"Settings"} href={""} />
-      <Route selected={false} Icon={LuLogOut} title={"Logout"} href={""} />
+      {routes.map((route, index) => {
+        return (
+          <Route
+            Icon={route.Icon}
+            title={route.title}
+            href={route.href}
+            key={index}
+          />
+        );
+      })}
     </div>
   );
 };
 
 export const Route = ({
-  selected,
   Icon,
   title,
   href,
 }: {
-  selected: boolean;
   Icon: IconType;
   title: string;
   href: string;
 }) => {
+  const pathname = usePathname();
   return (
     <Link
       href={href}
       className={`flex text-md font-normal items-center justify-start gap-4 w-full rounded-lg p-2 transition-[box-shadow,_background-color,_color] 
       ${
-        selected
+        href === pathname
           ? "bg-[#d6d9db] text-pri font-normal shadow"
           : "hover:bg-stone-200 bg-transparent shadow-none"
-      } ${title === "Logout" ? "text-red-500" : ""}`}
+      } ${title === "Logout" ? "text-red-500" : ""} ${
+        title === "Custom order" ? "bg-black text-white" : ""
+      }`}
     >
       <Icon />
       <span>{title}</span>

@@ -2,7 +2,7 @@ import React from "react";
 
 export const Topbar = () => {
   return (
-    <div className="mb-2 mt-0.5 p-2 ml-8 md:ml-2">
+    <div className="mb-2 p-2 ml-2 md:ml-2">
       <div
         style={{ fontFamily: "var(--font-inter)" }}
         className="font-semibold text-xl md:text-3xl"

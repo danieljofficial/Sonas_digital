@@ -7,7 +7,7 @@ export const QuickActionCards = () => {
       <p className="col-span-12 text-gray-950 text-lg font-normal">
         Quick actions
       </p>
-      <div className="lg:col-span-4 col-span-6 box-border rounded-xl bg-gray-100 p-2 flex flex-col ">
+      <div className="col-span-12 sm:col-span-6  border-black lg:col-span-4 box-border rounded-xl bg-gray-100 p-2 flex flex-col ">
         <div className=" p-0   flex flex-row justify-between items-center">
           <div className="text-gray-950 font-semibold text-xl">
             Start a new design
@@ -38,7 +38,7 @@ export const QuickActionCards = () => {
       </div>
       <Card title={"Brand your event"} imageUrl="/dashboard/event.png" />
 
-      <div className="bg-gray-100 lg:col-span-4 col-span-6 p-2 rounded-xl box-border overflow-hidden flex flex-col">
+      <div className="col-span-12 sm:col-span-6  border-yellow-500 bg-gray-100 lg:col-span-4 p-2 rounded-xl box-border overflow-hidden flex flex-col">
         <div className=" flex flex-row justify-between items-center mb-2">
           <div className="text-gray-950 font-semibold text-xl">
             Access brand kit
@@ -75,7 +75,7 @@ const ColorCard = ({ color }: { color: string }) => {
 
 const Card = ({ title, imageUrl }: { title: string; imageUrl: string }) => {
   return (
-    <div className="bg-gray-100 lg:col-span-4 col-span-6 p-2 rounded-xl flex flex-col ">
+    <div className="col-span-12 sm:col-span-6  border-red-500 bg-gray-100 lg:col-span-4 p-2 rounded-xl flex flex-col ">
       <div className=" flex flex-row justify-between items-center mb-2">
         <div className="text-gray-950 font-semibold text-xl">{title}</div>
         <LuArrowRight width={"50"} />

@@ -13,9 +13,7 @@ const Header = () => {
   return (
     <>
       <div className=" flex flex-col  justify-between  mb-6">
-        <h1 className=" ml-8 md:ml-0 text-3xl font-semibold mb-6 ">
-          Brand Kit
-        </h1>
+        <h1 className="md:ml-0 text-3xl font-semibold mb-6 ">Brand Kit</h1>
         <div className=" w-full sm:w-auto flex flex-col md:flex-row justify-between">
           <div className="relative w-full sm:w-auto md:mr-2 text-gray-800 max-md:mb-2">
             <Input
