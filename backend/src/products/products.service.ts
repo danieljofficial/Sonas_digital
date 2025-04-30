@@ -1,13 +1,42 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { createProductDto } from './dto/create-product-dto';
+import { PaginationDto } from './dto/pagination.dto';
+import { DEFAULT_PAGE_SIZE } from 'src/utils/contstants';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(
+    private readonly databaseService: DatabaseService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  ) {}
   async getProducts() {
-    const products = await this.databaseService.product.findMany();
-    return products;
+    // const products = await this.databaseService.product.findMany({
+    //   skip: paginationDto.skip,
+    //   take: paginationDto.limit ?? DEFAULT_PAGE_SIZE,
+    // });
+
+    // const cacheKey = "products"
+    // const cachedProducts = await this.cacheManager.get(cacheKey)
+
+    // if (cachedProducts) return cachedProducts
+
+    //   const products = await this.databaseService.product.findMany();
+    //   return products;
+
+    const cacheKey = 'products';
+    const cachedProducts = await this.cacheManager.get(cacheKey);
+    if (cachedProducts) {
+      console.log('cache hit');
+      return cachedProducts;
+    } else {
+      console.log('cache miss');
+      const products = await this.databaseService.product.findMany();
+      await this.cacheManager.set(cacheKey, products);
+      return products;
+    }
   }
 
   // async getProduct(productId: string) {
@@ -26,5 +55,12 @@ export class ProductsService {
     return await this.databaseService.product.create({
       data: { ...dto },
     });
+  }
+
+  async clearProductsCache() {
+    const keys = await this.cacheManager.stores.keys();
+    for (const key of keys) {
+      await this.cacheManager.del(key.toString());
+    }
   }
 }

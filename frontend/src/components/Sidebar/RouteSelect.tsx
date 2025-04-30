@@ -16,9 +16,16 @@ import {
   LuShoppingCart,
 } from "react-icons/lu";
 
+interface RouteType {
+  Icon: IconType;
+  title: string;
+  href: string;
+  prefetch?: () => void;
+}
+
 export const RouteSelect = () => {
   const pathname = usePathname();
-  const routes = [
+  const routes: RouteType[] = [
     {
       Icon: LuPlus,
       title: "Custom order",
@@ -38,6 +45,7 @@ export const RouteSelect = () => {
       Icon: LuShirt,
       title: "Product",
       href: "/products",
+      prefetch: () => {},
     },
     {
       Icon: LuPackage,
@@ -105,8 +113,9 @@ export const Route = ({
           ? "bg-[#d6d9db] text-pri font-normal shadow"
           : "hover:bg-stone-200 bg-transparent shadow-none"
       } ${title === "Logout" ? "text-red-500" : ""} ${
-        title === "Custom order" ? "bg-black text-white" : ""
+        title === "Custom order" ? "bg-red-500 text-white" : ""
       }`}
+      style={{ backgroundColor: `${title === "Custom order" ? "black" : ""}` }}
     >
       <Icon />
       <span>{title}</span>

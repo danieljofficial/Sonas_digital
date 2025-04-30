@@ -20,27 +20,3 @@ export const generateBlurDataUrl = (width: number, height: number) => {
     </svg>`
   )}`;
 };
-
-// const newUrl = "https://res.cloudinary.com/ddkv17ou7/image/upload/c_fill,w_400,h_400,q_auto,f_auto,dpr_auto/v1744886491/gift-box_kxnpxv.png"
-
-// const url = "https://res.cloudinary.com/ddkv17ou7/image/upload/v1744886491/gift-box_kxnpxv.png"
-
-// function test(url, newUrl) {
-//   const t = transform(url)
-//   if (t === newUrl) {
-//   console.log(newUrl)
-//     console.log(true)
-//     return
-//   }
-
-//   console.log(t)
-//   console.log(false)
-// }
-
-// function transform(url, sliceAtIndex) {
-//   const addition = "https://res.cloudinary.com/ddkv17ou7/image/upload/c_fill,w_400,h_400,q_auto,f_auto,dpr_auto/"
-//   const transformed = addition + url.slice(50)
-//   return transformed
-// }
-
-// test(url, newUrl)

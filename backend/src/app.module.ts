@@ -11,6 +11,7 @@ import { CloudinaryConfig } from 'src/cloudinary/cloudinary.config';
 import { BrandKitModule } from './brand-kit/brand-kit.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ProductsModule } from './products/products.module';
+import { RedisCacheModule } from './redis-cache/redis-cache.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ProductsModule } from './products/products.module';
     BrandKitModule,
     CloudinaryModule,
     ProductsModule,
+    RedisCacheModule,
   ],
   controllers: [AppController, BrandKitController],
   providers: [AppService, BrandKitService],

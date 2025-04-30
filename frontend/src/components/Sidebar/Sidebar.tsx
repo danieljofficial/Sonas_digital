@@ -40,6 +40,12 @@ export const Sidebar = () => {
         <RouteSelect />
         {/* <Footer /> */}
       </div>
+      {isOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-20 transition-all duration-300 ease-in-out"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
     </div>
   );
 };

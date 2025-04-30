@@ -44,6 +44,7 @@ model Product {
   orderItems   OrderItem[]
 
   Project Project[]
+  // @@index([name])
 }
 
 model ProductOption {
