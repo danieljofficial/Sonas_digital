@@ -3,21 +3,20 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { BrandKitDto } from './dto/brand-kit-dto';
 import { CloudinaryConfig } from 'src/cloudinary/cloudinary.config';
-import { debugPort } from 'process';
 import { UpdateBrandKitDto } from './dto/update-kit-dto';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { handlePrismaError } from 'src/errors/dbMutation';
 
 @Injectable()
 export class BrandKitService {
   constructor(
     private readonly databaseService: DatabaseService,
     private cloudinary: CloudinaryConfig,
-    // private cloudinary: CloudinaryService
   ) {}
   private readonly MAX_BRAND_KITS = 3;
 
@@ -68,40 +67,36 @@ export class BrandKitService {
     //   throw new Error('Please upload brand logo first.');
     // }
 
-    const userExists = await this.databaseService.user.findUnique({
-      where: { id: userId },
-      select: { id: true },
-    });
-
-    if (!userExists) {
-      throw new NotFoundException('user not found');
-    }
-
-    const count = await this.databaseService.brandKit.count({
-      where: { userId },
-    });
-    if (count >= this.MAX_BRAND_KITS) {
-      throw new ConflictException(
-        `Maximum of ${this.MAX_BRAND_KITS} allowed per user`,
-      );
-    }
-    return await this.databaseService.brandKit.create({
-      data: {
-        ...dto,
-        user: {
-          connect: { id: userId },
-        },
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            email: true,
-            name: true,
+    try {
+      const count = await this.databaseService.brandKit.count({
+        where: { userId },
+      });
+      if (count >= this.MAX_BRAND_KITS) {
+        throw new ConflictException(
+          `Maximum of ${this.MAX_BRAND_KITS} allowed per user`,
+        );
+      }
+      const newBrandKit = await this.databaseService.brandKit.create({
+        data: {
+          ...dto,
+          user: {
+            connect: { id: userId },
           },
         },
-      },
-    });
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+            },
+          },
+        },
+      });
+      return newBrandKit;
+    } catch (error) {
+      handlePrismaError(error, 'BrandKit');
+    }
   }
 
   async getUserBrandKits(userId: string) {
@@ -112,9 +107,14 @@ export class BrandKitService {
   }
 
   async getBrandKit(userId: string, brandKitId: string) {
-    return await this.databaseService.brandKit.findUnique({
-      where: { id: brandKitId, userId },
-    });
+    try {
+      const brandKit = await this.databaseService.brandKit.findUnique({
+        where: { id: brandKitId, userId },
+      });
+      return brandKit;
+    } catch (error) {
+      handlePrismaError(error, 'BrandKit');
+    }
   }
 
   async updateBrandKit(
@@ -122,33 +122,35 @@ export class BrandKitService {
     dto: UpdateBrandKitDto,
     brandKitId: string,
   ) {
-    const brandKit = this.databaseService.brandKit.findUnique({
-      where: { id: brandKitId, userId },
-    });
-    if (!brandKit) throw new NotFoundException();
-
-    return this.databaseService.brandKit.update({
-      where: { id: brandKitId },
-      data: dto,
-    });
+    try {
+      const updatedBrandkit = this.databaseService.brandKit.update({
+        where: { id: brandKitId, userId },
+        data: dto,
+      });
+      return updatedBrandkit;
+    } catch (error) {
+      handlePrismaError(error, 'BrandKit');
+    }
   }
 
   async deleteBrandKit(userId: string, brandKitId: string) {
-    const brandKit = await this.databaseService.brandKit.findUnique({
-      where: { id: brandKitId, userId },
-    });
-    if (!brandKit) {
-      throw new NotFoundException('Brand kit not found');
-    }
+    try {
+      const deletedBrandKit = await this.databaseService.brandKit.delete({
+        where: { id: brandKitId, userId },
+      });
 
+      this.deleteCloudinaryLogo(deletedBrandKit);
+    } catch (error) {
+      handlePrismaError(error, 'BrandKit');
+    }
+  }
+
+  private async deleteCloudinaryLogo(brandKit) {
     if (brandKit.logoUrl) {
       const publicId = brandKit.logoUrl.split('/').pop()?.split('.')[0];
       await this.cloudinary
         .getCloudinary()
         .uploader.destroy(`brand-logos/${publicId}`);
     }
-    return await this.databaseService.brandKit.delete({
-      where: { id: brandKitId, userId },
-    });
   }
 }

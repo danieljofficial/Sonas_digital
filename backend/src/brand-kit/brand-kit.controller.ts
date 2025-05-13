@@ -50,7 +50,15 @@ export class BrandKitController {
     return this.brandKitService.getUserBrandKits(user.sub.userId);
   }
 
-  @Patch('brandKitId')
+  @Get(':brandKitId')
+  async findOne(
+    @Param('brandKitId') brandKitId: string,
+    @User() user: AuthUser,
+  ) {
+    return this.brandKitService.getBrandKit(user.sub.userId, brandKitId);
+  }
+
+  @Patch(':brandKitId')
   async update(
     @Param('brandKitId') brandKitId: string,
     @Body() dto: UpdateBrandKitDto,
@@ -66,8 +74,8 @@ export class BrandKitController {
   @Delete(':brandKitId')
   async remove(
     @User() user: AuthUser,
-    @Param(':brandKitId') brandKitId: string,
+    @Param('brandKitId') brandKitId: string,
   ) {
-    return this.brandKitService.deleteBrandKit(brandKitId, user.sub.userId);
+    return this.brandKitService.deleteBrandKit(user.sub.userId, brandKitId);
   }
 }

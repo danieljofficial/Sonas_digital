@@ -1,4 +1,5 @@
 import BrandKit from "@/components/BrandKit/BrandKit";
+import { ViewBrandKits } from "@/components/BrandKit/ViewBrandKits";
 import { Sidebar } from "@/components/Sidebar/Sidebar";
 import React from "react";
 import { LuBell } from "react-icons/lu";
@@ -10,7 +11,8 @@ const BrandKitPage = () => {
         <LuBell className="w-6 h-6 ml-auto mr-4 text-center" />
       </div>
       <Sidebar />
-      <BrandKit />
+      {/* <BrandKit /> */}
+      <ViewBrandKits />
     </div>
   );
 };
