@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Switch from "../ui/switch";
-// import { Switch } from "../ui/switch";
 
 const PreferenceSettings = () => {
   const [requireApproval, setRequireApproval] = useState<boolean>(false);

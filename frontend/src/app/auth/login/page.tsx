@@ -5,22 +5,22 @@ import type React from "react";
 import { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { BACKEND_URL } from "@/utils/constants";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
-  // Handle regular login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    // Basic validation
     if (!email || !password) {
       setError("Please enter both email and password");
       return;
@@ -29,7 +29,7 @@ export default function LoginPage() {
     try {
       setIsLoading(true);
 
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,6 @@ export default function LoginPage() {
         body: JSON.stringify({
           email,
           password,
-          rememberMe,
         }),
       });
 
@@ -47,16 +46,18 @@ export default function LoginPage() {
         throw new Error(data.message || "Login failed");
       }
 
-      // Login successful
-      localStorage.setItem("token", data.token);
+      console.log(data);
+
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
       } else {
         localStorage.removeItem("rememberedEmail");
       }
 
-      // Redirect to dashboard
-      router.push("/dashboard");
+      if (data.backendTokens) {
+        const parsedToken = JSON.stringify(data.backendTokens);
+        login(parsedToken);
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during login");
     } finally {
@@ -64,12 +65,10 @@ export default function LoginPage() {
     }
   };
 
-  // Handle Google login
   const handleGoogleLogin = async () => {
     try {
       setIsLoading(true);
 
-      // Redirect to Google OAuth endpoint
       window.location.href = "/api/auth/google";
     } catch (err: any) {
       setError(err.message || "An error occurred with Google login");
@@ -77,7 +76,6 @@ export default function LoginPage() {
     }
   };
 
-  // Handle forgot password
   const handleForgotPassword = async () => {
     if (!email) {
       setError("Please enter your email address to reset password");
@@ -101,7 +99,6 @@ export default function LoginPage() {
         throw new Error(data.message || "Password reset request failed");
       }
 
-      // Show success message
       alert("Password reset link has been sent to your email");
     } catch (err: any) {
       setError(err.message || "An error occurred with password reset");
@@ -115,7 +112,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md rounded-lg bg-white p-4 sm:p-6 md:p-8">
         <div className="mb-4 sm:mb-6 text-center">
           <h1 className="text-base sm:text-lg font-normal text-gray-700">
-            Welcome to Sonasdigitals -Lets get started
+            Welcome to Sonasdigitals - Lets get started
           </h1>
         </div>
 

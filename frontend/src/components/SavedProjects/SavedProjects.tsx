@@ -14,19 +14,15 @@ export const SavedProjects = () => {
       style={{ fontFamily: "var(--font-inter)" }}
       className="overflow-y-auto h-screen bg-[#FFFFFF] rounded-lg pb-4 shadow-md mt-4"
     >
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-auto">
-        {/* <div className="p-4 md:p-6"> */}
         <Header />
 
-        {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <ProductCard image="/tshirt.png" title="Brand refresh 2025" />
           <ProductCard image="/beanie.png" title="Brand refresh 2025" />
           <ProductCard image="/headphones.png" title="Brand refresh 2025" />
           <ProductCard image="/headphones.png" title="Brand refresh 2025" />
         </div>
-        {/* </div> */}
       </div>
     </div>
   );

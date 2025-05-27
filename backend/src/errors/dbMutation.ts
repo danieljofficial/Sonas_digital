@@ -9,7 +9,6 @@ export function handlePrismaError(error: unknown, entityName: string): never {
     switch (error.code) {
       case 'P2025':
         throw new NotFoundException(`${entityName} not found`);
-      // Add other Prisma error codes as needed
       default:
         throw new InternalServerErrorException(
           `Prisma error during ${entityName} operation: ${error.message}`,

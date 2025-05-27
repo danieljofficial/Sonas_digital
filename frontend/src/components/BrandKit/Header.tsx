@@ -23,17 +23,6 @@ const Header = () => {
             />
             <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
           </div>
-          {/* <Select defaultValue="newest">
-            <SelectTrigger className="w-full sm:w-auto rounded-xl">
-              <SelectValue placeholder="Created: newest first" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="newest">Created: newest first</SelectItem>
-              <SelectItem value="oldest">Created: oldest first</SelectItem>
-              <SelectItem value="name-asc">Name: A-Z</SelectItem>
-              <SelectItem value="name-desc">Name: Z-A</SelectItem>
-            </SelectContent>
-          </Select> */}
 
           <button className="border border-sec flex py-2 px-2 rounded-lg text-pri font-semibold text-sm justify-center items-center">
             <Plus />

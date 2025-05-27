@@ -24,8 +24,6 @@ export default function SettingsPage() {
 
   return (
     <>
-      {/* <div className="flex flex-col min-h-screen border border-black"> */}
-      {/* Main Content */}
       <div className="flex-1 bg-white rounded-3xl px-2 py-4 sm:px-4 shadow-md mt-4">
         <h1 className=" text-2xl font-medium mb-4 md:mb-6 ml-0">Settings</h1>
 
@@ -49,11 +47,9 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          {/* Account Settings Form */}
           {getSettingsComponent(activeTab)}
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }

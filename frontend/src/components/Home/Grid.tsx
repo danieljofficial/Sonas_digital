@@ -1,13 +1,16 @@
 import React from "react";
 import { QuickActionCards } from "./QuickActionCards";
 import { ExploreProducts } from "./ExploreProducts";
+import Image from "next/image";
+import { Hero } from "./Hero";
 
 export const Grid = () => {
   return (
-    <div className="px-4 grid gap-2 grid-cols-12 lg:gap-3 w-fit">
-      <div className=" col-span-12">
-        <img src="/dashboard/wideImage.png" className="w-full" alt="" />
-      </div>
+    <div
+      style={{ fontFamily: "var(--font-nunito-sans)" }}
+      className="px-4 gap-2 lg:gap-3 grid  grid-cols-12 w-full max-w-[1440px] mx-auto text "
+    >
+      <Hero />
       <QuickActionCards />
       <ExploreProducts />
     </div>

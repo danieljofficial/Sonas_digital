@@ -38,14 +38,14 @@ export const RouteSelect = () => {
     },
     {
       Icon: LuPencilRuler,
-      title: "Brand kit",
+      title: "Brand Kit",
       href: "/brand-kit",
     },
     {
       Icon: LuShirt,
-      title: "Product",
+      title: "Products",
       href: "/products",
-      prefetch: () => {},
+      prefetch: () => { },
     },
     {
       Icon: LuPackage,
@@ -59,7 +59,7 @@ export const RouteSelect = () => {
     },
     {
       Icon: LuFolders,
-      title: "Saved Projects",
+      title: "Saved projects",
       href: "/saved-projects",
     },
     {
@@ -108,13 +108,11 @@ export const Route = ({
     <Link
       href={href}
       className={`flex text-md font-normal items-center justify-start gap-4 w-full rounded-lg p-2 transition-[box-shadow,_background-color,_color] 
-      ${
-        href === pathname
+      ${href === pathname
           ? "bg-[#d6d9db] text-pri font-normal shadow"
           : "hover:bg-stone-200 bg-transparent shadow-none"
-      } ${title === "Logout" ? "text-red-500" : ""} ${
-        title === "Custom order" ? "bg-red-500 text-white" : ""
-      }`}
+        } ${title === "Logout" ? "text-red-500" : ""} ${title === "Custom order" ? "bg-red-500 text-white" : ""
+        }`}
       style={{ backgroundColor: `${title === "Custom order" ? "black" : ""}` }}
     >
       <Icon />

@@ -1,9 +1,6 @@
-// "use client";
-
 import { Header } from "./Header";
 import { Grid } from "./Grid";
 import { Suspense, useEffect, useState } from "react";
-// import Sidebar from "./sidebar"
 
 interface Product {
   id: string;
@@ -18,10 +15,6 @@ interface Product {
 }
 
 export const ProductPage = () => {
-  // const [products, setProducts] = useState<Product[]>([]);
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [error, setError] = useState<string | null>(null);
-
   return (
     <>
       <div

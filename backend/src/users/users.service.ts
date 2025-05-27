@@ -35,13 +35,14 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return await this.databaseService.user.findUnique({
+    const user = await this.databaseService.user.findUnique({
       where: {
         id,
       },
     });
-  }
 
+    return user;
+  }
   async findByEmail(email: string) {
     return await this.databaseService.user.findUnique({
       where: {

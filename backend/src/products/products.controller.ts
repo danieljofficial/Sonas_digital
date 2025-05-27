@@ -13,10 +13,10 @@ export class ProductsController {
     return this.productsService.getProducts();
   }
 
-  // @Get(':productId')
-  // findOne(@Param('productId') productId: string) {
-  //   return this.productsService.getProduct(productId);
-  // }
+  @Get(':productId')
+  findOne(@Param('productId') productId: string) {
+    return this.productsService.getProduct(productId);
+  }
 
   @Post()
   create(@Body() dto: createProductDto) {

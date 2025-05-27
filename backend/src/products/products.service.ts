@@ -1,8 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { createProductDto } from './dto/create-product-dto';
-import { PaginationDto } from './dto/pagination.dto';
-import { DEFAULT_PAGE_SIZE } from 'src/utils/contstants';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 
@@ -13,39 +11,24 @@ export class ProductsService {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
   async getProducts() {
-    // const products = await this.databaseService.product.findMany({
-    //   skip: paginationDto.skip,
-    //   take: paginationDto.limit ?? DEFAULT_PAGE_SIZE,
-    // });
-
-    // const cacheKey = "products"
-    // const cachedProducts = await this.cacheManager.get(cacheKey)
-
-    // if (cachedProducts) return cachedProducts
-
-    //   const products = await this.databaseService.product.findMany();
-    //   return products;
-
     const cacheKey = 'products';
     const cachedProducts = await this.cacheManager.get(cacheKey);
     if (cachedProducts) {
-      console.log('cache hit');
       return cachedProducts;
     } else {
-      console.log('cache miss');
       const products = await this.databaseService.product.findMany();
       await this.cacheManager.set(cacheKey, products);
       return products;
     }
   }
 
-  // async getProduct(productId: string) {
-  //   const product = await this.databaseService.product.findUnique({
-  //     where: { id: productId },
-  //   });
-  //   if (!product) throw new NotFoundException('Product Not found');
-  //   return product;
-  // }
+  async getProduct(productId: string) {
+    const product = await this.databaseService.product.findUnique({
+      where: { id: productId },
+    });
+    if (!product) throw new NotFoundException('Product Not found');
+    return product;
+  }
 
   async createProduct(dto: createProductDto) {
     const product = await this.databaseService.product.findFirst({

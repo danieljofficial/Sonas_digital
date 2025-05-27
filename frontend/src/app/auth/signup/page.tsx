@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { BACKEND_URL } from "@/utils/constants";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -31,12 +32,10 @@ export default function SignupPage() {
     }));
   };
 
-  // Handle regular signup
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    // Basic validation
     if (
       !formData.firstName ||
       !formData.lastName ||
@@ -62,23 +61,19 @@ export default function SignupPage() {
     try {
       setIsLoading(true);
 
-      // Make API request to external signup endpoint
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            companyName: formData.companyName,
-            email: formData.email,
-            password: formData.password,
-          }),
-        }
-      );
+      const name = formData.firstName + formData.lastName;
+      const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          companyName: formData.companyName,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
       const data = await response.json();
 
@@ -86,11 +81,9 @@ export default function SignupPage() {
         throw new Error(data.message || "Signup failed");
       }
 
-      // Signup successful
-      localStorage.setItem("token", data.token);
+      console.log(data);
 
-      // Redirect to dashboard or login
-      router.push("/dashboard");
+      localStorage.setItem("token", data.token);
     } catch (err: any) {
       setError(err.message || "An error occurred during signup");
     } finally {
@@ -98,12 +91,10 @@ export default function SignupPage() {
     }
   };
 
-  // Handle Google signup
   const handleGoogleSignup = async () => {
     try {
       setIsLoading(true);
 
-      // Redirect to Google OAuth endpoint
       window.location.href = "/api/auth/google";
     } catch (err: any) {
       setError(err.message || "An error occurred with Google signup");

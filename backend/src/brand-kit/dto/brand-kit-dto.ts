@@ -4,9 +4,6 @@ export class BrandKitDto {
   @IsString()
   name: string;
 
-  // @IsString()
-  // userId: string;
-
   @IsString()
   logoUrl: string;
 

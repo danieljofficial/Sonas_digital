@@ -15,7 +15,6 @@ import { UpdateUserDto } from './dto/update-user-dto';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import { AuthUser, User } from 'src/decorators/user.decorator';
 
-// @UseGuards(JwtGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -38,7 +37,6 @@ export class UsersController {
   @UseGuards(JwtGuard)
   @Get()
   findProfile(@User() user: AuthUser) {
-    // return this.usersService.getUserProfile(user.sub.userId)
     const { email, sub, ...result } = user;
     return {
       email,
@@ -47,11 +45,13 @@ export class UsersController {
     };
   }
 
+  @UseGuards(JwtGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
 
+  @UseGuards(JwtGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);

@@ -51,8 +51,6 @@ export class BrandKitService {
         secureUrl: uploadInfo.secure_url,
       };
 
-      // this.logoUrl = result.secureUrl;
-
       return await this.databaseService.brandKit.update({
         where: { id: brandKitId, userId },
         data: { logoUrl: result.secureUrl },
@@ -63,10 +61,6 @@ export class BrandKitService {
   }
 
   async createBrandKit(userId: string, dto: BrandKitDto) {
-    // if (!dto.logoUrl) {
-    //   throw new Error('Please upload brand logo first.');
-    // }
-
     try {
       const count = await this.databaseService.brandKit.count({
         where: { userId },

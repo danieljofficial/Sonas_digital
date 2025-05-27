@@ -1,20 +1,4 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Search, Plus, Edit2, Trash2, Info } from "lucide-react";
 import BrandColorSelect from "./BrandColorSelect";
 import Header from "./Header";
 import UploadLogo from "./UploadLogo";

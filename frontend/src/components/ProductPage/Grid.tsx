@@ -74,12 +74,10 @@ const Card = ({ product }: { product: ProductTypes }) => {
         >
           <Image
             src={optimizeCloudinaryUrl(product.baseImageUrl, 50)}
-            // src="https://res.cloudinary.com/ddkv17ou7/image/upload/c_fill,w_400,h_400,q_auto,f_auto,dpr_auto/v1744886491/gift-box_kxnpxv.png"
-            // src="google.com"
             width={150}
             height={150}
             alt={product.name}
-            className="object-cover self-center text-center"
+            className="object-contain self-center text-center"
           />
         </div>
 

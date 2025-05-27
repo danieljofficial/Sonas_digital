@@ -1,16 +1,6 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-// interface AccountSettingsProps {
-//   handleSubmit: (e: React.FormEvent) => void;
-//   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   formData: {
-//     fullName: string;
-//     companyEmail: string;
-//     phoneNumber: string;
-//   };
-// }
-
 const AccountSettings = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -28,8 +18,6 @@ const AccountSettings = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log("Form submitted:", formData);
   };
   return (
     <form
