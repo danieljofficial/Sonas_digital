@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 export default function Home() {
-  return <div className=""></div>;
+  redirect("/auth/signup"); // Server-side redirect (happens before rendering)
 }
