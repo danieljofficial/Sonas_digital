@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "build:prod": "npx nest build && npm run prisma:generate",
-    "render:build": "npm install && nest build && npm prune --production && npm run prisma:generate",
+    "render:build": "npm run db:migrate && npm install && nest build && npm prune --production && npm run prisma:generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
