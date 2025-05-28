@@ -2,6 +2,22 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
+import { exec } from 'child_process';
+import util from 'util';
+
+const execAsync = util.promisify(exec);
+
+async function runPrismaMigrate() {
+  try {
+    console.log('Running Prisma migration...');
+    const { stdout, stderr } = await execAsync('npx prisma migrate deploy');
+    console.log(stdout);
+    if (stderr) console.error('stderr:', stderr);
+  } catch (error) {
+    console.error('Prisma migration failed:', error);
+  }
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 8000;
@@ -15,7 +31,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  await app.listen(port, host);
+  await runPrismaMigrate();
+  await await app.listen(port, host);
   console.log(`Application is running on port ${port}`);
   console.log('PORT', port);
   console.log('HOST', host);
