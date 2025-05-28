@@ -13,7 +13,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "npm run db:migrate node dist/main",
+    "start:prod": "npm run db:migrate:retry && node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -21,7 +21,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:generate": "prisma generate",
-    "db:migrate": "prisma migrate deploy"
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:retry": "for i in 1 2 3 4 5; do node wait-for-db.js && npm run db:migrate && break || sleep 5; done"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^3.0.1",
