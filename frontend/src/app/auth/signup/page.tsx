@@ -7,6 +7,7 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BACKEND_URL } from "@/utils/constants";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function SignupPage() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -81,9 +83,13 @@ export default function SignupPage() {
         throw new Error(data.message || "Signup failed");
       }
 
-      console.log(data);
+      // console.log(data);
 
-      localStorage.setItem("token", data.token);
+      // localStorage.setItem("token", data.token);
+      if (data.backendTokens) {
+        const parsedToken = JSON.stringify(data.backendTokens);
+        login(parsedToken);
+      }
     } catch (err: any) {
       setError(err.message || "An error occurred during signup");
     } finally {
