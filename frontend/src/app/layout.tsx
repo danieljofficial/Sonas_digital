@@ -1,29 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Poppins, Nunito_Sans, Inter } from "next/font/google";
+// import { Poppins, Nunito_Sans, Inter } from "next/font/google";
 import QueryProvider from "@/components/QueryProvider";
 import SessionProviders from "@/components/Providers/SessionProviders";
 import { AuthProvider } from "@/contexts/auth-context";
 import { FontProvider } from "@/components/Providers/FontProvider";
-
-
-//   subsets: ["latin"],
-//   weight: ["400", "700", "900"],
-//   variable: "--font-nunito-sans",
-//   preload: true,
-//   display: "swap",
-//   fallback: ['system-ui', 'arial'],
-// });
-//
-// const inter = Inter({
-//   subsets: ["latin"],
-//   weight: ["400", "500", "700"],
-//   variable: "--font-inter",
-//   preload: true,
-//   display: "swap",
-//   fallback: ['system-ui', 'arial'],
-// });
 
 export const metadata: Metadata = {
   title: "Sonas digital",
@@ -37,7 +19,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
       <head>
         <link
           rel="preload"
@@ -55,11 +36,7 @@ export default function RootLayout({
         />
       </head>
 
-      <body
-        className={` font-sans antialiased text-stone-950 bg-stone-100`}
-      >
-
-
+      <body className={` font-sans antialiased text-stone-950 bg-stone-100`}>
         {/* <SessionProviders> */}
         <FontProvider>
           <QueryProvider>

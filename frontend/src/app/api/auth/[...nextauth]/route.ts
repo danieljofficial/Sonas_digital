@@ -9,7 +9,7 @@ import NextAuth, {
 import CredentialsProvider from "next-auth/providers/credentials";
 import { headers } from "next/headers";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
