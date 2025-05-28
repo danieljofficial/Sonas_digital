@@ -17,9 +17,8 @@ async function bootstrap() {
   );
   await app.listen(port, host);
   console.log(`Application is running on port ${port}`);
-  console.log(`Application is running on port ${port}`);
-  console.log(`Application is running on port ${port}`);
-  console.log(`Application is running on port ${port}`);
+  console.log('PORT', port);
+  console.log('HOST', host);
   // const server = app.getHttpServer();
   // server.on('listening', () => {
   //   console.log('Server is listening on port:', server.address().port);
