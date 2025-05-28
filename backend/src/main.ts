@@ -3,9 +3,9 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 import { exec } from 'child_process';
-import util from 'util';
+import { promisify } from 'util';
 
-const execAsync = util.promisify(exec);
+const execAsync = promisify(exec);
 
 async function runPrismaMigrate() {
   try {
