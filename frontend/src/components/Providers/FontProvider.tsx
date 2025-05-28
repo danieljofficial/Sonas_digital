@@ -39,12 +39,14 @@
 
 import { Nunito_Sans, Inter } from "next/font/google";
 import { createContext, useContext } from "react";
+import { FiPauseCircle } from "react-icons/fi";
 
 const nunitoSans = Nunito_Sans({
   weight: ["400", "700"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-nunito-sans",
+  adjustFontFallback: false,
 });
 
 const inter = Inter({
@@ -52,6 +54,7 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+  adjustFontFallback: false,
 });
 
 const FontContext = createContext({ nunitoSans, inter });
