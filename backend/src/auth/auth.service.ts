@@ -8,6 +8,7 @@ import { UsersService } from 'src/users/users.service';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from 'src/decorators/user.decorator';
+import { RegisterUserDto } from './dto/register-user-dto';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,18 @@ export class AuthService {
     private userService: UsersService,
     private jwtService: JwtService,
   ) {}
+
+  async register(registerUserDto: RegisterUserDto) {
+    const user = await this.userService.create(registerUserDto);
+
+    if (user) {
+      const loggedUser = await this.login({
+        email: registerUserDto.email,
+        password: registerUserDto.password,
+      });
+      return loggedUser;
+    }
+  }
 
   async login(loginUserDto: LoginUserDto) {
     const user = await this.validateUser(loginUserDto);
