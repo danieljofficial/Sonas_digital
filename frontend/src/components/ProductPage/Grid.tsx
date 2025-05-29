@@ -7,6 +7,7 @@ import Image from "next/image";
 import { v4 as uuid } from "uuid";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import ProductModal from "./ProductModal";
+import { BACKEND_URL } from "@/utils/constants";
 
 export interface ProductTypes {
   id: string;
@@ -23,7 +24,7 @@ type ProductListProps = {
 };
 
 async function fetchProducts(): Promise<ProductTypes[]> {
-  const url = "http://localhost:8000/api/products/";
+  const url = `${BACKEND_URL}/api/products/`;
   const response = await fetch(url);
   return response.json();
 }
